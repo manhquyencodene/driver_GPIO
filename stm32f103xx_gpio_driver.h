@@ -54,9 +54,34 @@ typedef enum
 #define GPIO_SPEED_2MHZ            0x02
 #define GPIO_SPEED_50MHZ           0x03
 
+/*===========================================================================
+ *  EXTI Interrupt Configuration
+ *===========================================================================*/
+typedef struct {
+    uint8_t GPIO_PinNumber;   /* Pin gắn interrupt (0–15) */
+    uint8_t EXTI_Trigger;     /* RISING / FALLING / BOTH */
+    uint8_t NVIC_Priority;    /* 0 (cao nhất) → 15 */
+} GPIO_EXTI_Config_t;
+/*---------------------------------------------------------------------------
+ *  EXTI Trigger Mode
+ *---------------------------------------------------------------------------*/
+#define EXTI_TRIGGER_RISING     0
+#define EXTI_TRIGGER_FALLING    1
+#define EXTI_TRIGGER_BOTH       2
 
+/*===========================================================================
+ *  API — GPIO basic
+ *===========================================================================*/
 void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_Pin_Config_t * GPIO_PinConfig);
 void GPIO_WritePin(GPIO_RegDef_t * GPIOx, uint8_t PinNumber, GPIO_Pinstate_t PinState);
 uint8_t GPIO_ReadPin(GPIO_RegDef_t * GPIOx, uint8_t PinNumber);
-
+void GPIO_TogglePin(GPIO_RegDef_t* GPIOx, uint8_t PinNumber);
+/*===========================================================================
+ *  API — GPIO Interrupt
+ *===========================================================================*/
+void GPIO_EXTI_Init(GPIO_RegDef_t* GPIOx, GPIO_EXTI_Config_t* pCfg);
+void GPIO_EXTI_IRQHandler(uint8_t PinNumber);
+ 
+/* Weak callback — user override trong main.c */
+void GPIO_EXTI_Callback(uint8_t PinNumber);
 #endif /* __STM32F103XX_GPIO_DRIVER_H */
