@@ -132,19 +132,19 @@ void GPIO_EXTI_IRQHandler(uint8_t PinNumber)
 {
     if (EXTI->PR & (1U << PinNumber))
     {
-        EXTI->PR = (1U << PinNumber);     /* clear bằng write 1 */
+        EXTI->PR = (1U << PinNumber);
         GPIO_EXTI_Callback(PinNumber);
     }
 }
 
-/* Weak callback — user override trong main.c */
+
 __attribute__((weak)) void GPIO_EXTI_Callback(uint8_t PinNumber)
 {
     (void)PinNumber; /* tránh warning unused */
 }
 
 /*===========================================================================
- *  IRQ Handlers — tên phải khớp với startup file (.s)
+ *  IRQ Handlers
  *  Mỗi handler forward sang GPIO_EXTI_IRQHandler()
  *===========================================================================*/
 void EXTI0_IRQHandler(void)     { GPIO_EXTI_IRQHandler(0); }

@@ -57,10 +57,12 @@ typedef enum
 /*===========================================================================
  *  EXTI Interrupt Configuration
  *===========================================================================*/
-typedef struct {
+typedef struct
+{
     uint8_t GPIO_PinNumber;   /* Pin gắn interrupt (0–15) */
     uint8_t EXTI_Trigger;     /* RISING / FALLING / BOTH */
-    uint8_t NVIC_Priority;    /* 0 (cao nhất) → 15 */
+    uint8_t NVIC_Priority;
+    /* 0 (cao nhất) → 15 */
 } GPIO_EXTI_Config_t;
 /*---------------------------------------------------------------------------
  *  EXTI Trigger Mode
@@ -81,7 +83,7 @@ void GPIO_TogglePin(GPIO_RegDef_t* GPIOx, uint8_t PinNumber);
  *===========================================================================*/
 void GPIO_EXTI_Init(GPIO_RegDef_t* GPIOx, GPIO_EXTI_Config_t* pCfg);
 void GPIO_EXTI_IRQHandler(uint8_t PinNumber);
- 
-/* Weak callback — user override trong main.c */
+
+/* Weak callback — user override in main.c */
 void GPIO_EXTI_Callback(uint8_t PinNumber);
 #endif /* __STM32F103XX_GPIO_DRIVER_H */
